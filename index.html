@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Screenshots</title>
   <style>
-    :root { --gap: 16px; --max: 1100px; }
-    body { font-family: system-ui, Arial, sans-serif; margin: 24px; }
+    :root { --gap: 16px; --max: 1800px; } /* <-- HIER größer */
+    body { font-family: system-ui, Arial, sans-serif; margin: 12px; } /* <-- optional */
     .grid {
       max-width: var(--max);
       margin: 0 auto;
@@ -24,7 +24,7 @@
     }
     .lightbox:target { display: grid; }
     .lightbox img {
-      max-width: min(100%, 1200px);
+      max-width: min(100%, 1600px); /* <-- optional größer */
       max-height: 90vh;
       border-radius: 12px;
     }
@@ -42,19 +42,8 @@
     <a href="#img3"><img src="shot3.png" alt="shot3"></a>
   </main>
 
-  <div id="img1" class="lightbox">
-    <a class="close" href="#">×</a>
-    <img src="shot1.png" alt="shot1 groß">
-  </div>
-
-  <div id="img2" class="lightbox">
-    <a class="close" href="#">×</a>
-    <img src="shot2.png" alt="shot2 groß">
-  </div>
-
-  <div id="img3" class="lightbox">
-    <a class="close" href="#">×</a>
-    <img src="shot3.png" alt="shot3 groß">
-  </div>
+  <div id="img1" class="lightbox"><a class="close" href="#">×</a><img src="shot1.png" alt="shot1 groß"></div>
+  <div id="img2" class="lightbox"><a class="close" href="#">×</a><img src="shot2.png" alt="shot2 groß"></div>
+  <div id="img3" class="lightbox"><a class="close" href="#">×</a><img src="shot3.png" alt="shot3 groß"></div>
 </body>
 </html>
