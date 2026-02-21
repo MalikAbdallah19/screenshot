@@ -17,16 +17,16 @@
       background-color: #1a1a1a; 
       color: #fff;
       display: flex;
-      flex-direction: column; /* Damit Überschrift und Grid untereinander stehen */
+      flex-direction: column; 
       align-items: center;
       min-height: 100vh;
     }
 
-    /* Neue Hauptüberschrift im Overwatch-Style */
+    /* Hauptüberschrift im Overwatch-Style */
     .main-title {
       color: var(--ow-orange);
       font-size: 3rem;
-      font-style: italic; /* Typisch für OW */
+      font-style: italic; 
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -58,23 +58,20 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      border: 2px solid transparent; /* Vorbereitung für Hover-Rahmen */
+      border: 2px solid transparent; 
       
-      /* Animation anwenden (startet unsichtbar) */
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
     }
 
-    /* Leichte Verzögerung für jede Karte, damit sie nacheinander einblenden */
     .tier-list-item:nth-child(1) { animation-delay: 0.1s; }
     .tier-list-item:nth-child(2) { animation-delay: 0.3s; }
     .tier-list-item:nth-child(3) { animation-delay: 0.5s; }
 
-    /* Hover-Effekt jetzt mit orangem Leuchten */
     .tier-list-item:hover {
       transform: translateY(-8px);
-      box-shadow: 0 12px 24px rgba(249, 158, 26, 0.2); /* Oranger Schatten */
-      border-color: var(--ow-orange); /* Oranger Rahmen */
+      box-shadow: 0 12px 24px rgba(249, 158, 26, 0.2); 
+      border-color: var(--ow-orange); 
     }
 
     .tier-list-item h2 {
@@ -92,14 +89,50 @@
       overflow: hidden;
       border-radius: 0 0 10px 10px;
       flex-grow: 1; 
-      position: relative; /* Für möglichen Text-Overlay später */
+      position: relative; 
     }
 
     .tier-list-link img { 
       width: 100%; 
       height: auto;
       display: block;
-      /* object-fit: cover entfernt, damit keine Helden abgeschnitten werden! */
+    }
+
+    /* --- NEU: PERKS SECTION STYLES --- */
+    .perks-section {
+      margin-top: 60px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+      animation-delay: 0.7s; /* Erscheint kurz nach den Tier-Lists */
+    }
+
+    .perks-section h2 {
+      color: #ccc;
+      font-style: italic;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      font-size: 1.8rem;
+    }
+
+    .perks-button {
+      display: inline-block;
+      color: var(--ow-orange);
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 2px solid var(--ow-orange);
+      padding: 12px 32px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      background: rgba(249, 158, 26, 0.05);
+    }
+
+    .perks-button:hover {
+      background-color: var(--ow-orange);
+      color: #1a1a1a;
+      box-shadow: 0 0 20px rgba(249, 158, 26, 0.5);
+      transform: translateY(-2px);
     }
 
     /* Responsive */
@@ -157,7 +190,7 @@
     }
 
     .close:hover {
-      background: rgba(249, 158, 26, 0.8); /* OW Orange beim Schließen-Hover */
+      background: rgba(249, 158, 26, 0.8);
     }
   </style>
 </head>
@@ -187,6 +220,11 @@
       </a>
     </div>
   </main>
+
+  <div class="perks-section">
+    <h2>Perks:</h2>
+    <a href="https://owperks.com/" target="_blank" class="perks-button">owperks.com</a>
+  </div>
 
   <div id="img1" class="lightbox">
     <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
