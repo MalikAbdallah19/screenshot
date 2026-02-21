@@ -6,9 +6,14 @@
   <title>Overwatch-Tier-Lists</title>
   <style>
     :root { --gap: 16px; }
-    body { font-family: system-ui, Arial, sans-serif; margin: 12px; }
+    
+    body { 
+      font-family: system-ui, Arial, sans-serif; 
+      margin: 16px; 
+      background-color: #1a1a1a; /* Schöner, dunkler Hintergrund */
+    }
 
-    .grid{
+    .grid {
       width: min(96vw, 1600px);
       margin: 0 auto;
       display: grid;
@@ -16,66 +21,87 @@
       grid-template-columns: repeat(3, 1fr);
     }
 
-    a { display:block; border-radius: 10px; overflow:hidden; border: 1px solid #ddd; }
-    img { width: 100%; height: auto; display: block; background: #f6f6f6; }
+    /* Container für die Thumbnails */
+    .grid a { 
+      display: block; 
+      border-radius: 12px; 
+      overflow: hidden; 
+      background: #2a2a2a; /* Falls das Bild transparente Stellen hat */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
 
-    /* Thumbnails ~ bis zur Mitte (ohne schwarzen Rand) */
-    .grid a img{
-      height: 50vh;
-      min-height: 420px;
-      max-height: 650px;
-      width: 100%;
-      object-fit: contain;
-      background: #f6f6f6; /* <-- statt #111 */
+    /* Schöner Hover-Effekt statt Rahmen */
+    .grid a:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+    }
+
+    /* Bilder passen sich jetzt dynamisch an, ohne Ränder zu erzwingen */
+    .grid a img { 
+      width: 100%; 
+      height: auto; /* Höhe wird automatisch aus dem Bildformat berechnet */
+      display: block; 
     }
 
     @media (max-width: 1200px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
-      .grid a img{
-        height: 45vh;
-        min-height: 360px;
-        max-height: 600px;
-      }
     }
 
     @media (max-width: 900px) {
       .grid { grid-template-columns: 1fr; }
-      .grid a img{
-        height: 45vh;
-        min-height: 320px;
-        max-height: 520px;
-      }
     }
 
+    /* --- LIGHTBOX STYLES --- */
     .lightbox {
-      position: fixed; inset: 0;
+      position: fixed; 
+      inset: 0;
       display: none;
       place-items: center;
-      background: rgba(0,0,0,0.85);
-      padding: 8px;
+      padding: 16px;
       z-index: 999;
     }
+
     .lightbox:target { display: grid; }
 
+    /* Der dunkle Hintergrund, der die Lightbox schließt, wenn man ihn klickt */
+    .lightbox-close-bg {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      cursor: pointer;
+    }
+
+    /* Das große Bild */
     .lightbox img {
+      position: relative;
       width: auto;
       height: auto;
       max-width: 96vw;
       max-height: 96vh;
       border-radius: 12px;
-      background: transparent;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      z-index: 1000;
     }
 
+    /* Der Schließen-Button oben rechts */
     .close {
       position: fixed;
-      top: 12px; right: 12px;
+      top: 16px; right: 16px;
       color: #fff;
       text-decoration: none;
       font-size: 28px;
       line-height: 1;
-      padding: 10px 12px;
-      background: rgba(0,0,0,0.35);
-      border-radius: 10px;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      z-index: 1001;
+      transition: background 0.2s;
+    }
+
+    .close:hover {
+      background: rgba(255,255,255,0.3);
     }
   </style>
 </head>
@@ -86,10 +112,22 @@
     <a href="#img3"><img src="shot3.png" alt="shot3"></a>
   </main>
 
-  <div id="img1" class="lightbox"><a class="close" href="#" aria-label="Schließen">×</a><img src="shot1.png" alt="shot1 groß"></div>
-  <div id="img2" class="lightbox"><a class="close" href="#" aria-label="Schließen">×</a><img src="shot2.png" alt="shot2 groß"></div>
-  <div id="img3" class="lightbox"><a class="close" href="#" aria-label="Schließen">×</a><img src="shot3.png" alt="shot3 groß"></div>
+  <div id="img1" class="lightbox">
+    <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
+    <a class="close" href="#" aria-label="Schließen">×</a>
+    <img src="shot1.png" alt="shot1 groß">
+  </div>
+  
+  <div id="img2" class="lightbox">
+    <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
+    <a class="close" href="#" aria-label="Schließen">×</a>
+    <img src="shot2.png" alt="shot2 groß">
+  </div>
+  
+  <div id="img3" class="lightbox">
+    <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
+    <a class="close" href="#" aria-label="Schließen">×</a>
+    <img src="shot3.png" alt="shot3 groß">
+  </div>
 </body>
 </html>
-
-
