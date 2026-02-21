@@ -19,14 +19,14 @@
     a { display:block; border-radius: 10px; overflow:hidden; border: 1px solid #ddd; }
     img { width: 100%; height: auto; display: block; background: #f6f6f6; }
 
-    /* Thumbnails ~ bis zur Mitte */
+    /* Thumbnails ~ bis zur Mitte (ohne schwarzen Rand) */
     .grid a img{
       height: 50vh;
       min-height: 420px;
       max-height: 650px;
       width: 100%;
       object-fit: contain;
-      background: #111;
+      background: #f6f6f6; /* <-- statt #111 */
     }
 
     @media (max-width: 1200px) {
@@ -47,23 +47,21 @@
       }
     }
 
-    /* Lightbox */
     .lightbox {
       position: fixed; inset: 0;
       display: none;
       place-items: center;
       background: rgba(0,0,0,0.85);
-      padding: 8px;              /* weniger Rand -> Bild größer */
+      padding: 8px;
       z-index: 999;
     }
     .lightbox:target { display: grid; }
 
-    /* >>> Lightbox-Bild fast fullscreen <<< */
     .lightbox img {
       width: auto;
       height: auto;
-      max-width: 96vw;           /* fast volle Breite */
-      max-height: 96vh;          /* fast volle Höhe */
+      max-width: 96vw;
+      max-height: 96vh;
       border-radius: 12px;
       background: transparent;
     }
