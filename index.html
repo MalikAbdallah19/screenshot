@@ -5,81 +5,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Overwatch-Tier-Lists</title>
   <style>
-    :root { --gap: 24px; }
+    :root { 
+      --gap: 24px; 
+      --ow-orange: #f99e1a; /* Die klassische Overwatch-Farbe */
+    }
     
     body { 
-      font-family: system-ui, Arial, sans-serif; 
-      margin: 24px; 
-      background-color: #1a1a1a; /* Schöner, dunkler Hintergrund */
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+      margin: 0; 
+      padding: 40px 24px;
+      background-color: #1a1a1a; 
+      color: #fff;
       display: flex;
-      justify-content: center;
+      flex-direction: column; /* Damit Überschrift und Grid untereinander stehen */
       align-items: center;
-      min-height: 90vh; /* Versucht, den Inhalt vertikal zu zentrieren */
+      min-height: 100vh;
+    }
+
+    /* Neue Hauptüberschrift im Overwatch-Style */
+    .main-title {
+      color: var(--ow-orange);
+      font-size: 3rem;
+      font-style: italic; /* Typisch für OW */
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 0;
+      margin-bottom: 40px;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
 
     .grid {
       width: min(96vw, 1400px);
       display: grid;
       gap: var(--gap);
-      /* Wieder 3 Spalten, damit alles nebeneinander passt */
       grid-template-columns: repeat(3, 1fr);
       align-items: start;
     }
 
-    /* Neue Klasse für die "Karte", die Titel und Bild enthält */
+    /* Animation für das Einblenden beim Laden */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .tier-list-item {
       background: #2a2a2a;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      border: 2px solid transparent; /* Vorbereitung für Hover-Rahmen */
+      
+      /* Animation anwenden (startet unsichtbar) */
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
     }
 
-    /* Schöner Hover-Effekt für die ganze Karte */
+    /* Leichte Verzögerung für jede Karte, damit sie nacheinander einblenden */
+    .tier-list-item:nth-child(1) { animation-delay: 0.1s; }
+    .tier-list-item:nth-child(2) { animation-delay: 0.3s; }
+    .tier-list-item:nth-child(3) { animation-delay: 0.5s; }
+
+    /* Hover-Effekt jetzt mit orangem Leuchten */
     .tier-list-item:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.6);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(249, 158, 26, 0.2); /* Oranger Schatten */
+      border-color: var(--ow-orange); /* Oranger Rahmen */
     }
 
-    /* Styling für die neuen Überschriften */
     .tier-list-item h2 {
       color: #eee;
       text-align: center;
       margin: 16px 0;
       font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      font-style: italic;
     }
 
-    /* Der Link um das Bild */
     .tier-list-link { 
       display: block; 
       overflow: hidden;
-      /* Damit die unteren Ecken abgerundet sind */
-      border-radius: 0 0 12px 12px;
-      flex-grow: 1; /* Füllt den restlichen Platz aus */
+      border-radius: 0 0 10px 10px;
+      flex-grow: 1; 
+      position: relative; /* Für möglichen Text-Overlay später */
     }
 
-    /* Bilder passen sich der Breite an */
     .tier-list-link img { 
       width: 100%; 
       height: auto;
       display: block;
-      object-fit: cover; /* Sorgt für eine schöne Füllung */
+      /* object-fit: cover entfernt, damit keine Helden abgeschnitten werden! */
     }
 
-    /* Responsive Anpassung für kleinere Bildschirme */
+    /* Responsive */
     @media (max-width: 1100px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
+      .main-title { font-size: 2.2rem; }
     }
 
     @media (max-width: 700px) {
       .grid { grid-template-columns: 1fr; }
     }
 
-    /* --- LIGHTBOX STYLES (unverändert) --- */
+    /* --- LIGHTBOX STYLES --- */
     .lightbox {
       position: fixed; 
       inset: 0;
@@ -124,11 +157,14 @@
     }
 
     .close:hover {
-      background: rgba(255,255,255,0.4);
+      background: rgba(249, 158, 26, 0.8); /* OW Orange beim Schließen-Hover */
     }
   </style>
 </head>
 <body>
+
+  <h1 class="main-title">Overwatch Tier Lists</h1>
+
   <main class="grid">
     <div class="tier-list-item">
       <h2>TANK</h2>
