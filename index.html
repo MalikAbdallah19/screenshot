@@ -8,14 +8,13 @@
   <link rel="icon" type="image/png" href="favicon.png">
 
   <style>
-    /* NEU: Weiches Scrollen, wenn man auf Bilder klickt */
     html {
       scroll-behavior: smooth;
     }
 
     :root { 
       --gap: 24px; 
-      --ow-orange: #f99e1a; /* Die klassische Overwatch-Farbe */
+      --ow-orange: #f99e1a; 
     }
     
     body { 
@@ -30,7 +29,6 @@
       min-height: 100vh;
     }
 
-    /* Hauptüberschrift im Overwatch-Style */
     .main-title {
       color: var(--ow-orange);
       font-size: 3rem;
@@ -52,7 +50,6 @@
       align-items: start;
     }
 
-    /* Animation für das Einblenden beim Laden */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
@@ -67,6 +64,9 @@
       display: flex;
       flex-direction: column;
       border: 2px solid transparent; 
+      text-decoration: none; 
+      color: inherit;
+      cursor: pointer;
       
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
@@ -92,7 +92,7 @@
       font-style: italic;
     }
 
-    .tier-list-link { 
+    .tier-list-image-wrapper { 
       display: block; 
       overflow: hidden;
       border-radius: 0 0 10px 10px;
@@ -100,13 +100,12 @@
       position: relative; 
     }
 
-    .tier-list-link img { 
+    .tier-list-image-wrapper img { 
       width: 100%; 
       height: auto;
       display: block;
     }
 
-    /* --- PERKS SECTION STYLES --- */
     .perks-section {
       margin-top: 60px;
       text-align: center;
@@ -143,7 +142,6 @@
       transform: translateY(-2px);
     }
 
-    /* Responsive */
     @media (max-width: 1100px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
       .main-title { font-size: 2.2rem; }
@@ -176,7 +174,7 @@
       position: relative;
       width: auto;
       height: auto;
-      max-width: 94vw;
+      max-width: 90vw; /* Leicht verkleinert, damit die Pfeile mehr Platz haben */
       max-height: 94vh;
       border-radius: 12px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.9);
@@ -184,7 +182,7 @@
     }
 
     .close {
-      position: fixed;
+      position: absolute;
       top: 20px; right: 20px;
       color: #fff;
       text-decoration: none;
@@ -200,6 +198,34 @@
     .close:hover {
       background: rgba(249, 158, 26, 0.8);
     }
+
+    /* --- NEU: NAVIGATIONS-PFEILE --- */
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 4rem;
+      text-decoration: none;
+      padding: 20px;
+      z-index: 1001;
+      transition: color 0.2s, transform 0.2s;
+      user-select: none; /* Verhindert, dass man den Pfeil aus Versehen markiert */
+    }
+
+    .nav-arrow:hover {
+      color: var(--ow-orange);
+      transform: translateY(-50%) scale(1.1); /* Wird leicht größer beim Drüberfahren */
+    }
+
+    .nav-arrow.prev { left: 2vw; }
+    .nav-arrow.next { right: 2vw; }
+
+    @media (max-width: 700px) {
+      .nav-arrow { font-size: 2.5rem; padding: 10px; }
+      .nav-arrow.prev { left: 0; }
+      .nav-arrow.next { right: 0; }
+    }
   </style>
 </head>
 <body>
@@ -207,26 +233,26 @@
   <h1 class="main-title">Overwatch Tier Lists</h1>
 
   <main class="grid">
-    <div class="tier-list-item">
+    <a class="tier-list-item" href="#img1">
       <h2>TANK</h2>
-      <a class="tier-list-link" href="#img1">
+      <div class="tier-list-image-wrapper">
         <img src="shot1.png" alt="Tank Tier List Thumbnail">
-      </a>
-    </div>
+      </div>
+    </a>
 
-    <div class="tier-list-item">
+    <a class="tier-list-item" href="#img2">
       <h2>DPS</h2>
-      <a class="tier-list-link" href="#img2">
+      <div class="tier-list-image-wrapper">
         <img src="shot2.png" alt="DPS Tier List Thumbnail">
-      </a>
-    </div>
+      </div>
+    </a>
 
-    <div class="tier-list-item">
+    <a class="tier-list-item" href="#img3">
       <h2>SUPPORT</h2>
-      <a class="tier-list-link" href="#img3">
+      <div class="tier-list-image-wrapper">
         <img src="shot3.png" alt="Support Tier List Thumbnail">
-      </a>
-    </div>
+      </div>
+    </a>
   </main>
 
   <div class="perks-section">
@@ -237,25 +263,50 @@
   <div id="img1" class="lightbox">
     <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
     <a class="close" href="#" aria-label="Schließen">×</a>
+    <a class="nav-arrow prev" href="#img3" aria-label="Vorheriges Bild">&#10094;</a>
+    <a class="nav-arrow next" href="#img2" aria-label="Nächstes Bild">&#10095;</a>
     <img src="shot1.png" alt="Tank Tier List Großansicht">
   </div>
   
   <div id="img2" class="lightbox">
     <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
     <a class="close" href="#" aria-label="Schließen">×</a>
+    <a class="nav-arrow prev" href="#img1" aria-label="Vorheriges Bild">&#10094;</a>
+    <a class="nav-arrow next" href="#img3" aria-label="Nächstes Bild">&#10095;</a>
     <img src="shot2.png" alt="DPS Tier List Großansicht">
   </div>
   
   <div id="img3" class="lightbox">
     <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
     <a class="close" href="#" aria-label="Schließen">×</a>
+    <a class="nav-arrow prev" href="#img2" aria-label="Vorheriges Bild">&#10094;</a>
+    <a class="nav-arrow next" href="#img1" aria-label="Nächstes Bild">&#10095;</a>
     <img src="shot3.png" alt="Support Tier List Großansicht">
   </div>
 
   <script>
+    // Erweitertes Script für Escape-Taste UND Pfeiltasten
     document.addEventListener('keydown', function(event) {
-      if (event.key === "Escape") {
-        window.location.hash = ""; 
+      const currentHash = window.location.hash;
+      
+      // Nur ausführen, wenn wir gerade in einer Lightbox sind
+      if (currentHash.startsWith('#img')) {
+        
+        if (event.key === "Escape") {
+          window.location.hash = ""; // Schließen
+        } 
+        else if (event.key === "ArrowRight") {
+          // Nächstes Bild
+          if (currentHash === "#img1") window.location.hash = "#img2";
+          else if (currentHash === "#img2") window.location.hash = "#img3";
+          else if (currentHash === "#img3") window.location.hash = "#img1";
+        } 
+        else if (event.key === "ArrowLeft") {
+          // Vorheriges Bild
+          if (currentHash === "#img1") window.location.hash = "#img3";
+          else if (currentHash === "#img2") window.location.hash = "#img1";
+          else if (currentHash === "#img3") window.location.hash = "#img2";
+        }
       }
     });
   </script>
