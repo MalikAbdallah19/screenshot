@@ -8,9 +8,9 @@
     :root { --gap: 16px; }
     body { font-family: system-ui, Arial, sans-serif; margin: 12px; }
 
-    /* Grid nutzt fast die ganze Browserbreite */
+    /* Grid: etwas schmaler als vorher, damit die Thumbnails größer wirken */
     .grid{
-      width: min(98vw, 2200px);
+      width: min(96vw, 1600px);
       margin: 0 auto;
       display: grid;
       gap: var(--gap);
@@ -22,18 +22,24 @@
     /* Standard img-Regel (Lightbox nutzt weiter auto) */
     img { width: 100%; height: auto; display: block; background: #f6f6f6; }
 
-    /* >>> HIER wird die Vorschau groß gemacht <<< */
+    /* >>> VORSCHAU deutlich größer <<< */
     .grid a img{
-      height: 360px;        /* größer/kleiner: z.B. 300px oder 450px */
+      height: 650px;        /* <- noch größer? 700–800px */
       width: 100%;
       object-fit: contain;  /* nichts wird abgeschnitten */
       background: #111;     /* Balken sehen sauber aus */
     }
 
-    /* Auf Handy 1 Spalte */
+    /* Tablet/kleiner: 2 Spalten, damit es nicht gequetscht wirkt */
+    @media (max-width: 1200px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .grid a img { height: 520px; }
+    }
+
+    /* Handy: 1 Spalte */
     @media (max-width: 900px) {
       .grid { grid-template-columns: 1fr; }
-      .grid a img { height: 320px; }
+      .grid a img { height: 420px; }
     }
 
     .lightbox {
@@ -42,7 +48,7 @@
     }
     .lightbox:target { display: grid; }
     .lightbox img {
-      max-width: min(100%, 1600px);
+      max-width: min(100%, 1800px);
       max-height: 90vh;
       border-radius: 12px;
       background: transparent;
