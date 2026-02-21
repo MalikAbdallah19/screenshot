@@ -13,12 +13,12 @@
       background-color: #1a1a1a; /* Schöner, dunkler Hintergrund */
     }
 
-    .grid {
-      width: min(96vw, 1600px);
+ .grid {
+      width: min(96vw, 1200px); /* Ich habe 1600px auf 1200px reduziert, damit sie auf riesigen Monitoren nicht zu extrem werden */
       margin: 0 auto;
       display: grid;
-      gap: var(--gap);
-      grid-template-columns: repeat(3, 1fr);
+      gap: 32px; /* Lücke etwas vergrößert, sieht untereinander besser aus */
+      grid-template-columns: 1fr; /* <--- HIER: 1fr statt repeat(3, 1fr) */
     }
 
     /* Container für die Thumbnails */
@@ -131,3 +131,4 @@
   </div>
 </body>
 </html>
+
