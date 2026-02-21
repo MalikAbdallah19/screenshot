@@ -5,55 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Overwatch-Tier-Lists</title>
   <style>
-    :root { --gap: 16px; }
+    :root { --gap: 24px; }
     
     body { 
       font-family: system-ui, Arial, sans-serif; 
-      margin: 16px; 
+      margin: 24px; 
       background-color: #1a1a1a; /* Schöner, dunkler Hintergrund */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 90vh; /* Versucht, den Inhalt vertikal zu zentrieren */
     }
 
- .grid {
-      width: min(96vw, 1200px); /* Ich habe 1600px auf 1200px reduziert, damit sie auf riesigen Monitoren nicht zu extrem werden */
-      margin: 0 auto;
+    .grid {
+      width: min(96vw, 1400px);
       display: grid;
-      gap: 32px; /* Lücke etwas vergrößert, sieht untereinander besser aus */
-      grid-template-columns: 1fr; /* <--- HIER: 1fr statt repeat(3, 1fr) */
+      gap: var(--gap);
+      /* Wieder 3 Spalten, damit alles nebeneinander passt */
+      grid-template-columns: repeat(3, 1fr);
+      align-items: start;
     }
 
-    /* Container für die Thumbnails */
-    .grid a { 
-      display: block; 
-      border-radius: 12px; 
-      overflow: hidden; 
-      background: #2a2a2a; 
+    /* Neue Klasse für die "Karte", die Titel und Bild enthält */
+    .tier-list-item {
+      background: #2a2a2a;
+      border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Schöner Hover-Effekt */
-    .grid a:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+    /* Schöner Hover-Effekt für die ganze Karte */
+    .tier-list-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.6);
     }
 
-    /* WICHTIG: height: auto damit Bilder die volle Breite ausfüllen können */
-    .grid a img { 
-      width: 100%; 
-      height: auto; 
+    /* Styling für die neuen Überschriften */
+    .tier-list-item h2 {
+      color: #eee;
+      text-align: center;
+      margin: 16px 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* Der Link um das Bild */
+    .tier-list-link { 
       display: block; 
+      overflow: hidden;
+      /* Damit die unteren Ecken abgerundet sind */
+      border-radius: 0 0 12px 12px;
+      flex-grow: 1; /* Füllt den restlichen Platz aus */
     }
 
-    @media (max-width: 1200px) {
+    /* Bilder passen sich der Breite an */
+    .tier-list-link img { 
+      width: 100%; 
+      height: auto;
+      display: block;
+      object-fit: cover; /* Sorgt für eine schöne Füllung */
+    }
+
+    /* Responsive Anpassung für kleinere Bildschirme */
+    @media (max-width: 1100px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 700px) {
       .grid { grid-template-columns: 1fr; }
     }
 
-    /* --- LIGHTBOX STYLES --- */
+    /* --- LIGHTBOX STYLES (unverändert) --- */
     .lightbox {
       position: fixed; 
       inset: 0;
@@ -65,70 +91,83 @@
 
     .lightbox:target { display: grid; }
 
-    /* Der dunkle Hintergrund, der die Lightbox schließt, wenn man ihn klickt */
     .lightbox-close-bg {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.9);
       cursor: pointer;
     }
 
-    /* Das große Bild */
     .lightbox img {
       position: relative;
       width: auto;
       height: auto;
-      max-width: 96vw;
-      max-height: 96vh;
+      max-width: 94vw;
+      max-height: 94vh;
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.9);
       z-index: 1000;
     }
 
-    /* Der Schließen-Button oben rechts */
     .close {
       position: fixed;
-      top: 16px; right: 16px;
+      top: 20px; right: 20px;
       color: #fff;
       text-decoration: none;
-      font-size: 28px;
+      font-size: 32px;
       line-height: 1;
-      padding: 6px 14px;
-      background: rgba(255,255,255,0.15);
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.2);
       border-radius: 8px;
       z-index: 1001;
       transition: background 0.2s;
     }
 
     .close:hover {
-      background: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.4);
     }
   </style>
 </head>
 <body>
   <main class="grid">
-    <a href="#img1"><img src="shot1.png" alt="shot1"></a>
-    <a href="#img2"><img src="shot2.png" alt="shot2"></a>
-    <a href="#img3"><img src="shot3.png" alt="shot3"></a>
+    <div class="tier-list-item">
+      <h2>TANK</h2>
+      <a class="tier-list-link" href="#img1">
+        <img src="shot1.png" alt="Tank Tier List Thumbnail">
+      </a>
+    </div>
+
+    <div class="tier-list-item">
+      <h2>DPS</h2>
+      <a class="tier-list-link" href="#img2">
+        <img src="shot2.png" alt="DPS Tier List Thumbnail">
+      </a>
+    </div>
+
+    <div class="tier-list-item">
+      <h2>SUPPORT</h2>
+      <a class="tier-list-link" href="#img3">
+        <img src="shot3.png" alt="Support Tier List Thumbnail">
+      </a>
+    </div>
   </main>
 
   <div id="img1" class="lightbox">
     <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
     <a class="close" href="#" aria-label="Schließen">×</a>
-    <img src="shot1.png" alt="shot1 groß">
+    <img src="shot1.png" alt="Tank Tier List Großansicht">
   </div>
   
   <div id="img2" class="lightbox">
     <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
     <a class="close" href="#" aria-label="Schließen">×</a>
-    <img src="shot2.png" alt="shot2 groß">
+    <img src="shot2.png" alt="DPS Tier List Großansicht">
   </div>
   
   <div id="img3" class="lightbox">
     <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
     <a class="close" href="#" aria-label="Schließen">×</a>
-    <img src="shot3.png" alt="shot3 groß">
+    <img src="shot3.png" alt="Support Tier List Großansicht">
   </div>
 </body>
 </html>
-
