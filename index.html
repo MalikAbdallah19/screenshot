@@ -26,22 +26,22 @@
       display: block; 
       border-radius: 12px; 
       overflow: hidden; 
-      background: #2a2a2a; /* Falls das Bild transparente Stellen hat */
+      background: #2a2a2a; 
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       text-decoration: none;
     }
 
-    /* Schöner Hover-Effekt statt Rahmen */
+    /* Schöner Hover-Effekt */
     .grid a:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 16px rgba(0,0,0,0.7);
     }
 
-    /* Bilder passen sich jetzt dynamisch an, ohne Ränder zu erzwingen */
+    /* WICHTIG: height: auto damit Bilder die volle Breite ausfüllen können */
     .grid a img { 
       width: 100%; 
-      height: auto; /* Höhe wird automatisch aus dem Bildformat berechnet */
+      height: auto; 
       display: block; 
     }
 
