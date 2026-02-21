@@ -174,7 +174,7 @@
       position: relative;
       width: auto;
       height: auto;
-      max-width: 90vw; /* Leicht verkleinert, damit die Pfeile mehr Platz haben */
+      max-width: 90vw;
       max-height: 94vh;
       border-radius: 12px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.9);
@@ -210,12 +210,12 @@
       padding: 20px;
       z-index: 1001;
       transition: color 0.2s, transform 0.2s;
-      user-select: none; /* Verhindert, dass man den Pfeil aus Versehen markiert */
+      user-select: none;
     }
 
     .nav-arrow:hover {
       color: var(--ow-orange);
-      transform: translateY(-50%) scale(1.1); /* Wird leicht größer beim Drüberfahren */
+      transform: translateY(-50%) scale(1.1);
     }
 
     .nav-arrow.prev { left: 2vw; }
@@ -257,7 +257,10 @@
 
   <div class="perks-section">
     <h2>Perks:</h2>
-    <a href="https://owperks.com/" target="_blank" class="perks-button">owperks.com</a>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 16px;">
+      <a href="https://owperks.com/" target="_blank" class="perks-button">owperks.com</a>
+      <a href="https://stadiumbuilds.io/" target="_blank" class="perks-button">stadiumbuilds.io</a>
+    </div>
   </div>
 
   <div id="img1" class="lightbox">
