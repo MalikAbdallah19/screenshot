@@ -67,7 +67,6 @@
       text-decoration: none; 
       color: inherit;
       cursor: pointer;
-      
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
     }
@@ -122,6 +121,20 @@
       font-size: 1.8rem;
     }
 
+    .perks-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .perks-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .perks-button {
       display: inline-block;
       color: var(--ow-orange);
@@ -151,7 +164,6 @@
       .grid { grid-template-columns: 1fr; }
     }
 
-    /* --- LIGHTBOX STYLES --- */
     .lightbox {
       position: fixed; 
       inset: 0;
@@ -199,7 +211,6 @@
       background: rgba(249, 158, 26, 0.8);
     }
 
-    /* --- NEU: NAVIGATIONS-PFEILE --- */
     .nav-arrow {
       position: absolute;
       top: 50%;
@@ -256,14 +267,14 @@
   </main>
 
   <div class="perks-section">
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 40px;">
+    <div class="perks-container">
       
-      <div style="display: flex; flex-direction: column; align-items: center;">
+      <div class="perks-item">
         <h2>Perks:</h2>
         <a href="https://owperks.com/" target="_blank" class="perks-button">owperks.com</a>
       </div>
 
-      <div style="display: flex; flex-direction: column; align-items: center;">
+      <div class="perks-item">
         <h2>Stadium:</h2>
         <a href="https://stadiumbuilds.io/" target="_blank" class="perks-button">stadiumbuilds.io</a>
       </div>
@@ -295,13 +306,12 @@
     <img src="shot3.png" alt="Support Tier List Großansicht">
   </div>
 
- <script>
+  <script>
     document.addEventListener('keydown', function(event) {
       const currentHash = window.location.hash;
       
       if (currentHash.startsWith('#img')) {
         if (event.key === "Escape") {
-          // Schließt die Lightbox ohne neuen Verlaufseintrag
           window.location.replace(window.location.pathname); 
         } 
         else if (event.key === "ArrowRight") {
@@ -316,7 +326,19 @@
         }
       }
     });
+
+    document.querySelectorAll('.lightbox a').forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault(); 
+        const target = this.getAttribute('href');
+        
+        if (target === '#') {
+          window.location.replace(window.location.pathname);
+        } else {
+          window.location.replace(target);
+        }
+      });
+    });
   </script>
 </body>
 </html>
-
