@@ -295,31 +295,28 @@
     <img src="shot3.png" alt="Support Tier List Großansicht">
   </div>
 
-  <script>
-    // Erweitertes Script für Escape-Taste UND Pfeiltasten
+ <script>
     document.addEventListener('keydown', function(event) {
       const currentHash = window.location.hash;
       
-      // Nur ausführen, wenn wir gerade in einer Lightbox sind
       if (currentHash.startsWith('#img')) {
-        
         if (event.key === "Escape") {
-          window.location.hash = ""; // Schließen
+          // Schließt die Lightbox ohne neuen Verlaufseintrag
+          window.location.replace(window.location.pathname); 
         } 
         else if (event.key === "ArrowRight") {
-          // Nächstes Bild
-          if (currentHash === "#img1") window.location.hash = "#img2";
-          else if (currentHash === "#img2") window.location.hash = "#img3";
-          else if (currentHash === "#img3") window.location.hash = "#img1";
+          if (currentHash === "#img1") window.location.replace("#img2");
+          else if (currentHash === "#img2") window.location.replace("#img3");
+          else if (currentHash === "#img3") window.location.replace("#img1");
         } 
         else if (event.key === "ArrowLeft") {
-          // Vorheriges Bild
-          if (currentHash === "#img1") window.location.hash = "#img3";
-          else if (currentHash === "#img2") window.location.hash = "#img1";
-          else if (currentHash === "#img3") window.location.hash = "#img2";
+          if (currentHash === "#img1") window.location.replace("#img3");
+          else if (currentHash === "#img2") window.location.replace("#img1");
+          else if (currentHash === "#img3") window.location.replace("#img2");
         }
       }
     });
   </script>
 </body>
 </html>
+
