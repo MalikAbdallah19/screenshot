@@ -29,6 +29,46 @@ function syncLightboxFocus() {
   }
 }
 
+function getActiveLightbox() {
+  const activeBox = document.querySelector(window.location.hash);
+  if (activeBox && activeBox.classList.contains("lightbox")) {
+    return activeBox;
+  }
+
+  return null;
+}
+
+function trapFocusInLightbox(event) {
+  if (event.key !== "Tab") {
+    return;
+  }
+
+  const activeBox = getActiveLightbox();
+  if (!activeBox) {
+    return;
+  }
+
+  const focusable = activeBox.querySelectorAll("a[href], button, [tabindex]:not([tabindex='-1'])");
+  if (!focusable.length) {
+    return;
+  }
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  const current = document.activeElement;
+
+  if (event.shiftKey && current === first) {
+    event.preventDefault();
+    last.focus();
+    return;
+  }
+
+  if (!event.shiftKey && current === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
 tileLinks.forEach((link) => {
   link.addEventListener("click", () => {
     lastTrigger = link;
@@ -49,6 +89,8 @@ document.addEventListener("keydown", (event) => {
     moveLightbox(-1);
   }
 });
+
+document.addEventListener("keydown", trapFocusInLightbox);
 
 document.querySelectorAll(".lightbox a").forEach((link) => {
   link.addEventListener("click", (event) => {
