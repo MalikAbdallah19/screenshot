@@ -3,391 +3,129 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Overwatch-Tier-Lists</title>
-  
-  <link rel="icon" type="image/png" href="favicon.png">
-
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
-
-    :root { 
-      --gap: 24px; 
-      --ow-orange: #f99e1a; 
-    }
-    
-    body { 
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
-      margin: 0; 
-      padding: 40px 24px;
-      background-color: #1a1a1a; 
-      color: #fff;
-      display: flex;
-      flex-direction: column; 
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .main-title {
-      color: var(--ow-orange);
-      font-size: 3rem;
-      font-style: italic; 
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 0;
-      margin-bottom: 40px;
-      text-align: center;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .grid {
-      width: min(96vw, 1400px);
-      display: grid;
-      gap: var(--gap);
-      grid-template-columns: repeat(3, 1fr);
-      align-items: start;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .tier-list-item {
-      background: #2a2a2a;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      border: 2px solid transparent; 
-      text-decoration: none; 
-      color: inherit;
-      cursor: pointer;
-      opacity: 0;
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
-
-    .tier-list-item:nth-child(1) { animation-delay: 0.1s; }
-    .tier-list-item:nth-child(2) { animation-delay: 0.3s; }
-    .tier-list-item:nth-child(3) { animation-delay: 0.5s; }
-
-    .tier-list-item:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 24px rgba(249, 158, 26, 0.2); 
-      border-color: var(--ow-orange); 
-    }
-
-    .tier-list-item h2 {
-      color: #eee;
-      text-align: center;
-      margin: 16px 0;
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      font-style: italic;
-    }
-
-    .tier-list-image-wrapper { 
-      display: block; 
-      overflow: hidden;
-      border-radius: 0 0 10px 10px;
-      flex-grow: 1; 
-      position: relative; 
-    }
-
-    .tier-list-image-wrapper img { 
-      width: 100%; 
-      height: auto;
-      display: block;
-    }
-
-    .perks-section {
-      margin-top: 60px;
-      text-align: center;
-      opacity: 0;
-      animation: fadeInUp 0.6s ease-out forwards;
-      animation-delay: 0.7s; 
-    }
-
-    .perks-section h2 {
-      color: #ccc;
-      font-style: italic;
-      letter-spacing: 1px;
-      margin-bottom: 16px;
-      font-size: 1.8rem;
-    }
-
-    .perks-container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 40px;
-    }
-
-    .perks-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .perks-button {
-      display: inline-block;
-      color: var(--ow-orange);
-      font-size: 1.2rem;
-      font-weight: 700;
-      text-decoration: none;
-      border: 2px solid var(--ow-orange);
-      padding: 12px 32px;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-      background: rgba(249, 158, 26, 0.05);
-    }
-
-    .perks-button:hover {
-      background-color: var(--ow-orange);
-      color: #1a1a1a;
-      box-shadow: 0 0 20px rgba(249, 158, 26, 0.5);
-      transform: translateY(-2px);
-    }
-
-    @media (max-width: 1100px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-      .main-title { font-size: 2.2rem; }
-    }
-
-    @media (max-width: 700px) {
-      .grid { grid-template-columns: 1fr; }
-    }
-
-    .lightbox {
-      position: fixed; 
-      inset: 0;
-      display: none;
-      place-items: center;
-      padding: 16px;
-      z-index: 999;
-    }
-
-    .lightbox:target { display: grid; }
-
-    .lightbox-close-bg {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      cursor: pointer;
-    }
-
-    .lightbox img {
-      position: relative;
-      width: auto;
-      height: auto;
-      max-width: 90vw;
-      max-height: 94vh;
-      border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-      z-index: 1000;
-    }
-
-    .close {
-      position: absolute;
-      top: 20px; right: 20px;
-      color: #fff;
-      text-decoration: none;
-      font-size: 32px;
-      line-height: 1;
-      padding: 8px 16px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 8px;
-      z-index: 1001;
-      transition: background 0.2s;
-    }
-
-    .close:hover {
-      background: rgba(249, 158, 26, 0.8);
-    }
-
-    .nav-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 4rem;
-      text-decoration: none;
-      padding: 20px;
-      z-index: 1001;
-      transition: color 0.2s, transform 0.2s;
-      user-select: none;
-    }
-
-    .nav-arrow:hover {
-      color: var(--ow-orange);
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    .nav-arrow.prev { left: 2vw; }
-    .nav-arrow.next { right: 2vw; }
-
-    @media (max-width: 700px) {
-      .nav-arrow { font-size: 2.5rem; padding: 10px; }
-      .nav-arrow.prev { left: 0; }
-      .nav-arrow.next { right: 0; }
-    }
-  </style>
+  <title>Overwatch Tier Lists</title>
+  <meta
+    name="description"
+    content="Aktuelle Overwatch Tier Lists fuer Tank, DPS und Support sowie schnelle Links zu Perks- und Stadium-Ressourcen."
+  />
+  <link rel="icon" type="image/png" href="assets/images/ui/favicon.png" />
+  <link rel="stylesheet" href="assets/styles/main.css" />
 </head>
 <body>
+  <header class="hero">
+    <p class="eyebrow">Overwatch 2 Meta Hub</p>
+    <h1 class="main-title">Tier Lists fuer Tank, DPS und Support</h1>
+    <p class="intro">
+      Eine kompakte Uebersicht fuer die aktuelle Rolle-Meta mit schnellen Spruengen zu
+      Perks und Stadium Builds.
+    </p>
+  </header>
 
-  <h1 class="main-title">Overwatch Tier Lists</h1>
-
-  <main class="grid">
+  <main class="grid" aria-label="Overwatch Tier Lists">
     <a class="tier-list-item" href="#img1">
-      <h2>TANK</h2>
+      <div class="tier-list-copy">
+        <p class="role-tag">Frontline</p>
+        <h2>TANK</h2>
+      </div>
       <div class="tier-list-image-wrapper">
-        <img src="shot1.png" alt="Tank Tier List Thumbnail" loading="lazy" decoding="async" width="1280" height="720">
+        <img
+          src="assets/images/tierlists/tanks.png"
+          alt="Tank Tier List Vorschau"
+          loading="lazy"
+          decoding="async"
+          width="1280"
+          height="720"
+        />
       </div>
     </a>
 
     <a class="tier-list-item" href="#img2">
-      <h2>DPS</h2>
+      <div class="tier-list-copy">
+        <p class="role-tag">Damage</p>
+        <h2>DPS</h2>
+      </div>
       <div class="tier-list-image-wrapper">
-        <img src="shot2.png" alt="DPS Tier List Thumbnail" loading="lazy" decoding="async" width="1280" height="720">
+        <img
+          src="assets/images/tierlists/dps.png"
+          alt="DPS Tier List Vorschau"
+          loading="lazy"
+          decoding="async"
+          width="1280"
+          height="720"
+        />
       </div>
     </a>
 
     <a class="tier-list-item" href="#img3">
-      <h2>SUPPORT</h2>
+      <div class="tier-list-copy">
+        <p class="role-tag">Backline</p>
+        <h2>SUPPORT</h2>
+      </div>
       <div class="tier-list-image-wrapper">
-        <img src="shot3.png" alt="Support Tier List Thumbnail" loading="lazy" decoding="async" width="1280" height="720">
+        <img
+          src="assets/images/tierlists/support.png"
+          alt="Support Tier List Vorschau"
+          loading="lazy"
+          decoding="async"
+          width="1280"
+          height="720"
+        />
       </div>
     </a>
   </main>
 
-  <div class="perks-section">
-    <div class="perks-container">
-      
-      <div class="perks-item">
-        <h2>Perks:</h2>
-        <a href="https://owperks.com/" target="_blank" rel="noopener noreferrer" class="perks-button">owperks.com</a>
-      </div>
-
-      <div class="perks-item">
-        <h2>Stadium:</h2>
-        <a href="https://stadiumbuilds.io/" target="_blank" rel="noopener noreferrer" class="perks-button">stadiumbuilds.io</a>
-      </div>
-
+  <section class="resources-section" aria-label="Externe Ressourcen">
+    <div class="resource-card">
+      <p class="resource-label">Perks</p>
+      <h2>Perk Referenz</h2>
+      <a
+        href="https://owperks.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="resource-button"
+      >
+        owperks.com
+      </a>
     </div>
-  </div>
 
-  <div id="img1" class="lightbox" role="dialog" aria-modal="true" aria-label="Tank Tier List Großansicht">
-    <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
-    <a class="close" href="#" aria-label="Schließen">×</a>
+    <div class="resource-card">
+      <p class="resource-label">Stadium</p>
+      <h2>Build Finder</h2>
+      <a
+        href="https://stadiumbuilds.io/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="resource-button"
+      >
+        stadiumbuilds.io
+      </a>
+    </div>
+  </section>
+
+  <div id="img1" class="lightbox" role="dialog" aria-modal="true" aria-label="Tank Tier List Grossansicht">
+    <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schliessen"></a>
+    <a class="close" href="#" aria-label="Schliessen">&times;</a>
     <a class="nav-arrow prev" href="#img3" aria-label="Vorheriges Bild">&#10094;</a>
-    <a class="nav-arrow next" href="#img2" aria-label="Nächstes Bild">&#10095;</a>
-    <img src="shot1.png" alt="Tank Tier List Großansicht">
+    <a class="nav-arrow next" href="#img2" aria-label="Naechstes Bild">&#10095;</a>
+    <img src="assets/images/tierlists/tanks.png" alt="Tank Tier List Grossansicht" />
   </div>
-  
-  <div id="img2" class="lightbox" role="dialog" aria-modal="true" aria-label="DPS Tier List Großansicht">
-    <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
-    <a class="close" href="#" aria-label="Schließen">×</a>
+
+  <div id="img2" class="lightbox" role="dialog" aria-modal="true" aria-label="DPS Tier List Grossansicht">
+    <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schliessen"></a>
+    <a class="close" href="#" aria-label="Schliessen">&times;</a>
     <a class="nav-arrow prev" href="#img1" aria-label="Vorheriges Bild">&#10094;</a>
-    <a class="nav-arrow next" href="#img3" aria-label="Nächstes Bild">&#10095;</a>
-    <img src="shot2.png" alt="DPS Tier List Großansicht">
+    <a class="nav-arrow next" href="#img3" aria-label="Naechstes Bild">&#10095;</a>
+    <img src="assets/images/tierlists/dps.png" alt="DPS Tier List Grossansicht" />
   </div>
-  
-  <div id="img3" class="lightbox" role="dialog" aria-modal="true" aria-label="Support Tier List Großansicht">
-    <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schließen"></a>
-    <a class="close" href="#" aria-label="Schließen">×</a>
+
+  <div id="img3" class="lightbox" role="dialog" aria-modal="true" aria-label="Support Tier List Grossansicht">
+    <a class="lightbox-close-bg" href="#" aria-label="Hintergrund schliessen"></a>
+    <a class="close" href="#" aria-label="Schliessen">&times;</a>
     <a class="nav-arrow prev" href="#img2" aria-label="Vorheriges Bild">&#10094;</a>
-    <a class="nav-arrow next" href="#img1" aria-label="Nächstes Bild">&#10095;</a>
-    <img src="shot3.png" alt="Support Tier List Großansicht">
+    <a class="nav-arrow next" href="#img1" aria-label="Naechstes Bild">&#10095;</a>
+    <img src="assets/images/tierlists/support.png" alt="Support Tier List Grossansicht" />
   </div>
 
-  <script>
-    const imageHashes = ['#img1', '#img2', '#img3'];
-    const tileLinks = document.querySelectorAll('.tier-list-item');
-    let lastTrigger = null;
-
-    function closeLightbox() {
-      window.location.replace('#');
-      if (lastTrigger) {
-        lastTrigger.focus();
-      }
-    }
-
-    function moveLightbox(step) {
-      const currentIndex = imageHashes.indexOf(window.location.hash);
-      if (currentIndex === -1) {
-        return;
-      }
-      const nextIndex = (currentIndex + step + imageHashes.length) % imageHashes.length;
-      window.location.replace(imageHashes[nextIndex]);
-    }
-
-    function syncLightboxFocus() {
-      const activeBox = document.querySelector(window.location.hash);
-      if (activeBox && activeBox.classList.contains('lightbox')) {
-        const closeButton = activeBox.querySelector('.close');
-        if (closeButton) {
-          closeButton.focus();
-        }
-      }
-    }
-
-    tileLinks.forEach(function(link) {
-      link.addEventListener('click', function() {
-        lastTrigger = this;
-      });
-    });
-
-    document.addEventListener('keydown', function(event) {
-      const currentHash = window.location.hash;
-      if (!currentHash.startsWith('#img')) {
-        return;
-      }
-
-      if (event.key === 'Escape') {
-        closeLightbox();
-      } else if (event.key === 'ArrowRight') {
-        moveLightbox(1);
-      } else if (event.key === 'ArrowLeft') {
-        moveLightbox(-1);
-      }
-    });
-
-    document.querySelectorAll('.lightbox a').forEach(function(link) {
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        const target = this.getAttribute('href');
-
-        if (target === '#') {
-          closeLightbox();
-          return;
-        }
-
-        window.location.replace(target);
-      });
-    });
-
-    window.addEventListener('hashchange', syncLightboxFocus);
-    syncLightboxFocus();
-  </script>
+  <script src="assets/scripts/main.js"></script>
 </body>
 </html>
-
