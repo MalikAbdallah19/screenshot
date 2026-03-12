@@ -144,8 +144,7 @@ body::before {
   letter-spacing: 0.16em;
 }
 
-.tier-list-item h2,
-.resource-card h2 {
+.tier-list-item h2 {
   margin: 0;
   font-size: 1.65rem;
   letter-spacing: 0.08em;
@@ -188,7 +187,7 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: 18px;
+  margin-top: 8px;
   padding: 12px 20px;
   border: 1px solid rgba(249, 158, 26, 0.7);
   border-radius: 999px;
