@@ -3,9 +3,9 @@ import path from "node:path";
 import sharp from "sharp";
 
 const root = process.cwd();
-const tierDir = path.join(root, "assets", "images", "tierlists");
+const tierDir = path.join(root, "assets", "tierlists");
 
-const imageBaseNames = ["tanks", "dps", "support"];
+const imageBaseNames = ["tank", "dps", "support"];
 
 async function optimizeImage(baseName) {
   const input = path.join(tierDir, `${baseName}.png`);
